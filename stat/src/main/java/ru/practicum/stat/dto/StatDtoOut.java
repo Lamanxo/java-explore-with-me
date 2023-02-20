@@ -13,5 +13,5 @@ import lombok.experimental.FieldDefaults;
 public class StatDtoOut {
     String app;
     String uri;
-    Integer hits;
+    Long hits;
 }

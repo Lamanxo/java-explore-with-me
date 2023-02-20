@@ -1,5 +1,6 @@
 package ru.practicum.stat.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+
+import static ru.practicum.stat.dto.DateTimePattern.DEFAULT_TIME_FORMAT;
 
 @Data
 @NoArgsConstructor
@@ -21,5 +24,6 @@ public class HitDtoIn {
     @NotNull
     String ip;
     @NotNull
+    @JsonFormat(pattern = DEFAULT_TIME_FORMAT)
     LocalDateTime timestamp;
 }
