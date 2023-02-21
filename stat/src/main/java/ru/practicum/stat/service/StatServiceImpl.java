@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.stat.dto.HitDtoIn;
 import ru.practicum.stat.dto.StatDtoOut;
 import ru.practicum.stat.mappers.HitMapper;
-import ru.practicum.stat.repo.HitRepo;
+import ru.practicum.stat.repo.HItRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StatServiceImpl implements StatService{
 
-    private final HitRepo hitRepo;
+    private final HItRepository hitRepo;
 
     @Override
     public void addHit(HitDtoIn hitDtoIn) {
