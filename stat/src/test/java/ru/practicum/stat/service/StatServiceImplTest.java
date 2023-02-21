@@ -1,4 +1,4 @@
-package ru.practicum.service;
+package ru.practicum.stat.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,7 +8,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.practicum.stat.dto.HitDtoIn;
 import ru.practicum.stat.dto.StatDtoOut;
 import ru.practicum.stat.repo.HItRepository;
-import ru.practicum.stat.service.StatServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.List;

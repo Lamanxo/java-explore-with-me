@@ -1,4 +1,4 @@
-package ru.practicum.controller;
+package ru.practicum.stat.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -9,7 +9,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.practicum.stat.controller.StatController;
 import ru.practicum.stat.dto.HitDtoIn;
 import ru.practicum.stat.dto.StatDtoOut;
 import ru.practicum.stat.service.StatService;
