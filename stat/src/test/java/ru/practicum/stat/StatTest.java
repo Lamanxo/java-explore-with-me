@@ -7,5 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 class StatTest {
     @Test
     void contextLoads() {
+        StatApp.main(new String[]{});
     }
 }
