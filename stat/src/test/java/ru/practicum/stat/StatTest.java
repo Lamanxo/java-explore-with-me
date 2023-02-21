@@ -6,5 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class StatTest {
     @Test
-    void contextLoads() {}
+    void contextLoads() {
+    }
 }
