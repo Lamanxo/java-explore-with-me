@@ -1,0 +1,28 @@
+package ru.practicum.dto;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
+
+import java.time.LocalDateTime;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class EventDtoIn {
+
+    String annotation;
+    Long category;
+    String description;
+    LocalDateTime eventDate;
+    LocationDto location;
+    String title;
+    Boolean paid;
+    Long participantLimit;
+    Boolean requestModeration;
+
+}
+
