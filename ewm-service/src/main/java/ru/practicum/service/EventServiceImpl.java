@@ -7,15 +7,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.practicum.dto.*;
 import ru.practicum.enums.State;
+import ru.practicum.exception.ConflictException;
 import ru.practicum.exception.NotFoundException;
+import ru.practicum.model.Event;
+import ru.practicum.model.User;
+import ru.practicum.repo.CategoryRepository;
 import ru.practicum.repo.EventRepository;
+import ru.practicum.repo.UserRepository;
+import ru.practicum.service.interfaces.CategoryService;
 import ru.practicum.service.interfaces.EventService;
 import ru.practicum.service.interfaces.UserService;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static ru.practicum.mappers.EventMapper.makeEventDto;
+import static ru.practicum.mappers.EventMapper.*;
+import static ru.practicum.mappers.CategoryMapper.*;
+
 
 @Service
 @RequiredArgsConstructor
@@ -26,18 +34,34 @@ public class EventServiceImpl implements EventService {
 
     final UserService userService;
 
+    final UserRepository userRepo;
+
+    final CategoryService catService;
+
+    final CategoryRepository catRepo;
+
     @Override
     public EventDto addByUser(Long userId, EventDtoIn eventDtoIn) {
-        return null;
+        if (eventDtoIn.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
+            throw new ConflictException("Wrong Event date");
+        }
+        Event event = makeEvent(eventDtoIn);
+        event.setInitiator(userOrException(userId));
+        event.setCategory(catRepo.findById(eventDtoIn.getCategory()).orElseThrow(() ->
+                new NotFoundException("Category with id: " + eventDtoIn.getCategory() + " not found")));
+
+        return makeEventDto(eventRepo.save(event));
     }
 
     @Override
     public List<EventDtoOut> getAllByUser(Long userId, Pageable pageable) {
+
         return null;
     }
 
     @Override
     public EventDto updateEventByUser(Long userId, Long eventId, EventDtoUserUpdated dtoUserUpdated) {
+
         return null;
     }
 
@@ -66,5 +90,16 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventDto> getAllByAdmin(List<Long> users, List<State> states, List<Long> categories, LocalDateTime rangeStart, LocalDateTime rangeEnd, Pageable pageable) {
         return null;
+    }
+
+    private User userOrException(Long id) {
+        return userRepo.findById(id).orElseThrow(() ->
+                new NotFoundException("User with id: " + id + " not found"));
+    }
+
+    private EventDtoOut makeEventDtoOutFinal(Event event) {
+        EventDtoOut dtoOut = makeEventDtoOut(event);
+        dtoOut.setCategory(catService.getCategoryById(event.getCategory().getId()));
+        return dtoOut;
     }
 }
