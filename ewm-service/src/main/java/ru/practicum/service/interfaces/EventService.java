@@ -11,16 +11,23 @@ public interface EventService {
 
     EventDto addByUser(Long userId, EventDtoIn eventDtoIn);
 
-    EventDto getByIdPublic(Long id);
+    List<EventDtoOut> getAllByUser(Long userId, Pageable pageable);
 
     EventDto updateEventByUser(Long userId, Long eventId, EventDtoUserUpdated dtoUserUpdated);
 
-    EventDto updateEventByAdmin(Long eventId, EventDtoAdminUpdated dtoAdminUpdated);
+    EventDto getByUser(Long userId, Long eventId);
+
+    EventDto getByIdPublic(Long id);
 
     List<EventDtoOut> getAllByPublic(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
                                      LocalDateTime rangeEnd, Boolean onlyAvailable, String sort, Pageable pageable);
 
+    EventDto updateEventByAdmin(Long eventId, EventDtoAdminUpdated dtoAdminUpdated);
+
     List<EventDto> getAllByAdmin(List<Long> users, List<State> states, List<Long> categories,
                                  LocalDateTime rangeStart, LocalDateTime rangeEnd,
                                  Pageable pageable);
+
+
+
 }
