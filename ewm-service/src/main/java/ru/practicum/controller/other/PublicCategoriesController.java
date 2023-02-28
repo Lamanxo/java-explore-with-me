@@ -1,4 +1,4 @@
-package ru.practicum.controller;
+package ru.practicum.controller.other;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;

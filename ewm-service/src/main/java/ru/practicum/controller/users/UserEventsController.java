@@ -1,4 +1,4 @@
-package ru.practicum.controller;
+package ru.practicum.controller.users;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
