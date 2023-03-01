@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
 
@@ -24,6 +25,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             (Collection<Long> initiatorId, Collection<State> state, Collection<Long> categoryId,
              LocalDateTime rangeStart, LocalDateTime rangeEnd, Pageable pageable);
 
-
+    List<Event> findAllByIdIn(Set<Long> events);
 
 }

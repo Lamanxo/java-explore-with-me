@@ -1,0 +1,20 @@
+package ru.practicum.mappers;
+
+import ru.practicum.dto.PartyRequestDto;
+import ru.practicum.model.Request;
+
+import java.time.LocalDateTime;
+
+public class RequestMapper {
+
+    public static PartyRequestDto makerRequestDto(Request request) {
+        PartyRequestDto dto = new PartyRequestDto();
+        dto.setId(request.getId());
+        dto.setCreated(request.getCreated());
+        dto.setEvent(request.getEvent().getId());
+        dto.setRequester(request.getRequester().getId());
+        dto.setStatus(request.getStatus());
+        return dto;
+    }
+
+}
