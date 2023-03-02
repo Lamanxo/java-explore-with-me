@@ -3,7 +3,6 @@ package ru.practicum.service;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.apache.catalina.connector.Request;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -14,11 +13,14 @@ import ru.practicum.enums.Status;
 import ru.practicum.enums.UserStateAction;
 import ru.practicum.exception.ConflictException;
 import ru.practicum.exception.NotFoundException;
+import ru.practicum.mappers.RequestMapper;
 import ru.practicum.model.Category;
 import ru.practicum.model.Event;
+import ru.practicum.model.Request;
 import ru.practicum.model.User;
 import ru.practicum.repo.CategoryRepository;
 import ru.practicum.repo.EventRepository;
+import ru.practicum.repo.RequestRepository;
 import ru.practicum.repo.UserRepository;
 import ru.practicum.service.interfaces.CategoryService;
 import ru.practicum.service.interfaces.EventService;
@@ -29,6 +31,7 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,6 +47,7 @@ public class EventServiceImpl implements EventService {
     final UserRepository userRepo;
     final CategoryService catService;
     final CategoryRepository catRepo;
+    final RequestRepository requestRepo;
 
     @Override
     public EventDto addByUser(Long userId, EventDtoIn eventDtoIn) {
@@ -232,6 +236,20 @@ public class EventServiceImpl implements EventService {
         return dtoList;
     }
 
+    @Override
+    public Collection<PartyRequestDto> getRequestsOfEvent(Long userId, Long eventId) {
+        userOrException(userId);
+        Event event = eventOrException(eventId);
+        if (!event.getInitiator().getId().equals(userId)) {
+            throw new ConflictException("User " + userId + " are not initiator of event");
+        }
+        List<PartyRequestDto> dtoList = new ArrayList<>();
+        for (var request : requestRepo.findAllByEventId(eventId)) {
+            dtoList.add(RequestMapper.makerRequestDto(request));
+        }
+        return dtoList;
+    }
+
     private User userOrException(Long id) {
         return userRepo.findById(id).orElseThrow(() ->
                 new NotFoundException("User with id: " + id + " not found"));
@@ -246,5 +264,11 @@ public class EventServiceImpl implements EventService {
     private Event eventOrException(Long eventId) {
         return eventRepo.findById(eventId).orElseThrow(() ->
                 new NotFoundException("Event with id: " + eventId + " not found"));
+    }
+
+    private void statusPendingOrException(Request request) {
+        if (!request.getStatus().equals(Status.PENDING)) {
+            throw new ConflictException("Request status must be PENDING");
+        }
     }
 }

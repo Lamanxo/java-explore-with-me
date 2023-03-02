@@ -49,7 +49,7 @@ public class RequestServiceImpl implements RequestService {
         if (requests.size() != 0) {
             throw new ConflictException("User already sent request");
         }
-        if (event.getParticipantLimit() != 0 && event.getParticipantLimit() <= requestRepo.countAllByEvent(eventId)) {
+        if (event.getParticipantLimit() != 0 && event.getParticipantLimit() <= requestRepo.countAllByEventId(eventId)) {
             throw new ConflictException("Event already full");
         }
         Request request = makeFullRequest(event, requester);

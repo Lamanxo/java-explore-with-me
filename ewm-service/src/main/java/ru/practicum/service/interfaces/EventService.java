@@ -5,6 +5,7 @@ import ru.practicum.dto.*;
 import ru.practicum.enums.State;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 public interface EventService {
@@ -28,6 +29,6 @@ public interface EventService {
                                  LocalDateTime rangeStart, LocalDateTime rangeEnd,
                                  Pageable pageable);
 
-
+    Collection<PartyRequestDto> getRequestsOfEvent(Long userId, Long eventId);
 
 }
