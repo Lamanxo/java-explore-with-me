@@ -3,7 +3,6 @@ package ru.practicum.service;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -281,7 +280,7 @@ public class EventServiceImpl implements EventService {
         }
     }
 
-    private RequestStatusDtoOut confirmedStatus (List<Request> requests, Event event) {
+    private RequestStatusDtoOut confirmedStatus(List<Request> requests, Event event) {
         RequestStatusDtoOut dtoOut = new RequestStatusDtoOut(new ArrayList<>(), new ArrayList<>());
         for (var request : requests) {
             try {
@@ -300,7 +299,7 @@ public class EventServiceImpl implements EventService {
         return dtoOut;
     }
 
-    private RequestStatusDtoOut rejectStatus (List<Request> requests, Event event) {
+    private RequestStatusDtoOut rejectStatus(List<Request> requests, Event event) {
         RequestStatusDtoOut dtoOut = new RequestStatusDtoOut(new ArrayList<>(), new ArrayList<>());
         for (Request request : requests) {
             statusPendingOrException(request);

@@ -21,9 +21,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findAll(Specification<Event> specification, Pageable pageable);
 
-    Page<Event> findAllByInitiator_IdInAndState_InAndCategory_IdInAndEventDateBetween
-            (Collection<Long> initiatorId, Collection<State> state, Collection<Long> categoryId,
-             LocalDateTime rangeStart, LocalDateTime rangeEnd, Pageable pageable);
+    Page<Event> findAllByInitiator_IdInAndState_InAndCategory_IdInAndEventDateBetween(Collection<Long> initiatorId,
+             Collection<State> state, Collection<Long> categoryId, LocalDateTime rangeStart, LocalDateTime rangeEnd, Pageable pageable);
 
     List<Event> findAllByIdIn(Set<Long> events);
 
