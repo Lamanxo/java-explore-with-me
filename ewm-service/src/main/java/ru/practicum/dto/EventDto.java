@@ -37,5 +37,4 @@ public class EventDto {
     Boolean requestModeration;
     State state;
     Long views;
-
 }
