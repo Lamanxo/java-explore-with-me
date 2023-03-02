@@ -20,8 +20,9 @@ public interface EventService {
 
     EventDto getByIdPublic(Long id);
 
-    List<EventDtoOut> getAllByPublic(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
-                                     LocalDateTime rangeEnd, Boolean onlyAvailable, String sort, Pageable pageable);
+    List<EventDtoOut> getAllByPublic(String text, List<Long> categories,
+                                     Boolean paid, LocalDateTime rangeStart, LocalDateTime rangeEnd,
+                                     Boolean onlyAvailable, Pageable pageable);
 
     EventDto updateEventByAdmin(Long eventId, EventDtoAdminUpdated dtoAdminUpdated);
 
@@ -30,5 +31,7 @@ public interface EventService {
                                  Pageable pageable);
 
     Collection<PartyRequestDto> getRequestsOfEvent(Long userId, Long eventId);
+
+    RequestStatusDtoOut updateRequest(Long userId, Long eventId, RequestStatusDtoIn dtoIn);
 
 }

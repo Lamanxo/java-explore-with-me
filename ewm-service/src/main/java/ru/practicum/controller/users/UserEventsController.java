@@ -1,14 +1,64 @@
 package ru.practicum.controller.users;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import ru.practicum.dto.*;
+import ru.practicum.service.interfaces.EventService;
+
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/users/{userId}/events")
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserEventsController {
 
+    private final EventService service;
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public EventDto addByUser(@PathVariable Long userId,
+                              @RequestBody @Validated EventDtoIn eventDtoIn) {
+        return service.addByUser(userId, eventDtoIn);
+    }
+
+    @GetMapping("/{eventId}")
+    public EventDto getByUser(@PathVariable Long userId,
+                              @PathVariable Long eventId) {
+        return service.getByUser(userId, eventId);
+    }
+
+    @GetMapping
+    public Collection<EventDtoOut> getAllByUser(@PathVariable Long userId,
+                                                  @PositiveOrZero @RequestParam(defaultValue = "0") int from,
+                                                  @Positive @RequestParam(defaultValue = "10") int size) {
+        return service.getAllByUser(userId, PageRequest.of(from, size));
+    }
+
+    @PatchMapping("/{eventId}")
+    public EventDto updateEventByUser(@PathVariable Long userId, @PathVariable Long eventId,
+                                      @RequestBody @Validated EventDtoUserUpdated eventDtoUserUpdated) {
+        return service.updateEventByUser(userId, eventId, eventDtoUserUpdated);
+    }
+
+    @GetMapping("/{eventId}/requests")
+    public Collection<PartyRequestDto> getRequestsOfEvent(@PathVariable Long userId,
+                                                          @PathVariable Long eventId) {
+        return service.getRequestsOfEvent(userId, eventId);
+    }
+
+    @PatchMapping("/{eventId}/requests")
+    public RequestStatusDtoOut updateRequest(@PathVariable() Long userId,
+                                                                  @PathVariable() Long eventId,
+                                                                  @RequestBody() RequestStatusDtoIn dtoIn) {
+        return service.updateRequest(userId, eventId, dtoIn);
+    }
 
 }

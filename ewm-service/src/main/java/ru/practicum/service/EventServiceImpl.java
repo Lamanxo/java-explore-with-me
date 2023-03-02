@@ -3,9 +3,11 @@ package ru.practicum.service;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.*;
 import ru.practicum.enums.AdminStateAction;
 import ru.practicum.enums.State;
@@ -35,6 +37,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+import static ru.practicum.enums.Status.CONFIRMED;
+import static ru.practicum.enums.Status.REJECTED;
 import static ru.practicum.mappers.EventMapper.*;
 
 
@@ -50,6 +54,7 @@ public class EventServiceImpl implements EventService {
     final RequestRepository requestRepo;
 
     @Override
+    @Transactional
     public EventDto addByUser(Long userId, EventDtoIn eventDtoIn) {
         if (eventDtoIn.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
             throw new ConflictException("Wrong Event date");
@@ -73,6 +78,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public EventDto updateEventByUser(Long userId, Long eventId, EventDtoUserUpdated dtoUserUpdated) {
         Event event = eventOrException(eventId);
         if (event.getState().equals(State.PUBLISHED)) {
@@ -131,8 +137,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventDtoOut> getAllByPublic(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
-                                            LocalDateTime rangeEnd, Boolean onlyAvailable, String sort, Pageable pageable) {
+    public List<EventDtoOut> getAllByPublic(String text, List<Long> categories,
+                                            Boolean paid, LocalDateTime rangeStart, LocalDateTime rangeEnd,
+                                            Boolean onlyAvailable, Pageable pageable) {
         List<EventDtoOut> dtoList = new ArrayList<>();
         LocalDateTime startDate = Objects.requireNonNullElseGet(rangeStart, () -> LocalDateTime.now().plusYears(30));
         LocalDateTime endDate = Objects.requireNonNullElseGet(rangeEnd, () -> LocalDateTime.now().minusYears(30));
@@ -160,7 +167,7 @@ public class EventServiceImpl implements EventService {
                         builder.and(builder.notEqual(root.get("participantLimit"), 0),
                                 builder.greaterThan(root.get("participantLimit"), subQuery.select(builder.count(requestRoot.get("id")))
                                         .where(builder.equal(eventsRequests.get("id"), requestRoot.get("event").get("id")))
-                                        .where(builder.equal(requestRoot.get("status"), Status.CONFIRMED))))));
+                                        .where(builder.equal(requestRoot.get("status"), CONFIRMED))))));
 
             }
             return builder.and(predicates.toArray(new Predicate[0]));
@@ -174,6 +181,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public EventDto updateEventByAdmin(Long eventId, EventDtoAdminUpdated dtoAdminUpdated) {
         Event event = eventOrException(eventId);
         if (dtoAdminUpdated.getStateAction() == AdminStateAction.PUBLISH_EVENT) {
@@ -248,6 +256,59 @@ public class EventServiceImpl implements EventService {
             dtoList.add(RequestMapper.makerRequestDto(request));
         }
         return dtoList;
+    }
+
+    @Override
+    @Transactional
+    public RequestStatusDtoOut updateRequest(Long userId, Long eventId, RequestStatusDtoIn dtoIn) {
+        userOrException(userId);
+        Event event = eventOrException(eventId);
+        if (!event.getInitiator().getId().equals(userId)) {
+            throw new ConflictException("User " + userId + " are not initiator of event");
+        }
+        List<Request> requests = requestRepo.findAllByRequesterIdAndEventId(eventId, dtoIn.getRequestIds());
+        return requestsFinalUpdate(requests, Status.valueOf(dtoIn.getStatus()), event);
+
+    }
+
+    private RequestStatusDtoOut requestsFinalUpdate(List<Request> requests, Status status, Event event) {
+        if (status.equals(CONFIRMED)) {
+            return confirmedStatus(requests, event);
+        } else if (status.equals(REJECTED)) {
+            return rejectStatus(requests, event);
+        } else {
+            return new RequestStatusDtoOut();
+        }
+    }
+
+    private RequestStatusDtoOut confirmedStatus (List<Request> requests, Event event) {
+        RequestStatusDtoOut dtoOut = new RequestStatusDtoOut(new ArrayList<>(), new ArrayList<>());
+        for (var request : requests) {
+            try {
+                statusPendingOrException(request);
+            } catch (ConflictException e) {
+                continue;
+            }
+            if (event.getParticipantLimit() - requestRepo.getRequestsWithConfirmedStatus(event.getId(), CONFIRMED) <= 0) {
+                throw new ConflictException("Event already full");
+            } else {
+                request.setStatus(CONFIRMED);
+                request = requestRepo.save(request);
+                dtoOut.getConfirmedRequests().add(RequestMapper.makerRequestDto(request));
+            }
+        }
+        return dtoOut;
+    }
+
+    private RequestStatusDtoOut rejectStatus (List<Request> requests, Event event) {
+        RequestStatusDtoOut dtoOut = new RequestStatusDtoOut(new ArrayList<>(), new ArrayList<>());
+        for (Request request : requests) {
+            statusPendingOrException(request);
+            request.setStatus(Status.REJECTED);
+            request = requestRepo.save(request);
+            dtoOut.getRejectedRequests().add(RequestMapper.makerRequestDto(request));
+        }
+        return dtoOut;
     }
 
     private User userOrException(Long id) {
