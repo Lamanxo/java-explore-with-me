@@ -266,7 +266,6 @@ public class EventServiceImpl implements EventService {
         }
         List<Request> requests = requestRepo.findAllByIdAndEventId(eventId, dtoIn.getRequestIds());
         return requestsFinalUpdate(requests, Status.valueOf(dtoIn.getStatus()), event);
-
     }
 
     private RequestStatusDtoOut requestsFinalUpdate(List<Request> requests, Status status, Event event) {
