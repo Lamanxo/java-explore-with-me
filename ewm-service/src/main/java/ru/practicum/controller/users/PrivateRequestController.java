@@ -1,4 +1,4 @@
-package ru.practicum.controller.other;
+package ru.practicum.controller.users;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

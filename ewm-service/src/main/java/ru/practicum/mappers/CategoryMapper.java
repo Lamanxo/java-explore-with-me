@@ -7,7 +7,7 @@ public class CategoryMapper {
 
     public static Category makeCategory(CategoryDto categoryDto) {
         Category category = new Category();
-        category.setName(category.getName());
+        category.setName(categoryDto.getName());
         return category;
     }
 

@@ -1,6 +1,7 @@
 package ru.practicum.controller.admin;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/users")
 @RequiredArgsConstructor
+@Slf4j
 public class AdminUsersController {
 
     private final UserService userService;
@@ -24,6 +26,7 @@ public class AdminUsersController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto addUser(@RequestBody @Validated UserDto dto) {
+        log.warn("Add user {}", dto.getName());
         return userService.addUser(dto);
     }
 

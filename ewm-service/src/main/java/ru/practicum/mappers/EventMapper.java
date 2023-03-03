@@ -45,7 +45,7 @@ public class EventMapper {
         event.setTitle(dtoIn.getTitle());
         event.setConfirmedRequests(0L);
         event.setCreatedOn(LocalDateTime.now());
-        event.setDescription(event.getDescription());
+        event.setDescription(dtoIn.getDescription());
         event.setParticipantLimit(dtoIn.getParticipantLimit());
         event.setPublishedOn(LocalDateTime.now());
         event.setRequestModeration(dtoIn.getRequestModeration());

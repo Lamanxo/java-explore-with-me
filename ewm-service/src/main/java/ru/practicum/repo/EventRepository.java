@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import ru.practicum.enums.State;
 import ru.practicum.model.Event;
 
@@ -15,6 +16,7 @@ import java.util.Set;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
 
+    @Query("select e from Event e where e.id = ?1 and e.initiator.id = ?2")
     Optional<Event> findByIdAndInitiatorId(Long eventId, Long initiatorId);
 
     List<Event> findAllByInitiatorId(Long id, Pageable pageable);

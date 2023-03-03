@@ -79,7 +79,8 @@ public class EventServiceImpl implements EventService {
     @Override
     @Transactional
     public EventDto updateEventByUser(Long userId, Long eventId, EventDtoUserUpdated dtoUserUpdated) {
-        Event event = eventOrException(eventId);
+        Event event = eventRepo.findByIdAndInitiatorId(eventId,userId).orElseThrow(() ->
+                new NotFoundException("Event: " + eventId + " or User with id: " + userId + " not found"));
         if (event.getState().equals(State.PUBLISHED)) {
             throw new ConflictException("Event already posted");
         }
@@ -120,7 +121,7 @@ public class EventServiceImpl implements EventService {
         if (dtoUserUpdated.getLocation() != null) {
             event.setLocation(dtoUserUpdated.getLocation());
         }
-        return makeEventDto(eventRepo.save(event));
+        return makeEventDto(event);
     }
 
     @Override

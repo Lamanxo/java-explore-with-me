@@ -13,7 +13,7 @@ import java.util.Collection;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/public/categories")
+@RequestMapping("/categories")
 public class PublicCategoriesController {
 
     private final CategoryService service;
