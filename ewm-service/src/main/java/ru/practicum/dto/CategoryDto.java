@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import javax.validation.constraints.NotBlank;
-
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 @RequiredArgsConstructor
