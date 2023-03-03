@@ -28,13 +28,7 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
     Long getRequestsWithConfirmedStatus(Long eventId, Status confirmed);
 
 
-    @Query("select r from Request r where r.id = ?1 and r.event.id = ?2")
-    List<Request> findAllByIdAndEventId(Long requestId, List<Long> ids);
-
-
-
-
-
-
+    @Query("select r from Request r where r.id = ?2 and r.event.id = ?1")
+    List<Request> findAllByIdAndEventId(Long eventId, List<Long> ids);
 
 }
