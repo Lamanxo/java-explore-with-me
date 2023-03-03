@@ -12,6 +12,7 @@ import ru.practicum.enums.AdminStateAction;
 import ru.practicum.enums.State;
 import ru.practicum.enums.Status;
 import ru.practicum.enums.UserStateAction;
+import ru.practicum.exception.BadRequestException;
 import ru.practicum.exception.ConflictException;
 import ru.practicum.exception.NotFoundException;
 import ru.practicum.mappers.RequestMapper;
@@ -57,6 +58,9 @@ public class EventServiceImpl implements EventService {
     public EventDto addByUser(Long userId, EventDtoIn eventDtoIn) {
         if (eventDtoIn.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
             throw new ConflictException("Wrong Event date");
+        }
+        if (eventDtoIn.getAnnotation() == null || eventDtoIn.getDescription() == null) {
+            throw new BadRequestException("Some event values are null");
         }
         Event event = makeEvent(eventDtoIn);
         event.setInitiator(userOrException(userId));
@@ -121,7 +125,7 @@ public class EventServiceImpl implements EventService {
         if (dtoUserUpdated.getLocation() != null) {
             event.setLocation(dtoUserUpdated.getLocation());
         }
-        return makeEventDto(event);
+        return makeEventDto(eventRepo.save(event));
     }
 
     @Override
@@ -245,28 +249,22 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Collection<PartyRequestDto> getRequestsOfEvent(Long userId, Long eventId) {
-        userOrException(userId);
-        Event event = eventOrException(eventId);
-        if (!event.getInitiator().getId().equals(userId)) {
-            throw new ConflictException("User " + userId + " are not initiator of event");
-        }
+    public Collection<PartyRequestDto> getUserOwnRequests(Long userId, Long eventId) {
         List<PartyRequestDto> dtoList = new ArrayList<>();
-        for (var request : requestRepo.findAllByEventId(eventId)) {
-            dtoList.add(RequestMapper.makerRequestDto(request));
+        for (var request : requestRepo.getAllRequestsOfUser(userId, eventId)) {
+            dtoList.add(RequestMapper.makeRequestDto(request));
         }
         return dtoList;
     }
 
     @Override
-    @Transactional
     public RequestStatusDtoOut updateRequest(Long userId, Long eventId, RequestStatusDtoIn dtoIn) {
         userOrException(userId);
         Event event = eventOrException(eventId);
         if (!event.getInitiator().getId().equals(userId)) {
             throw new ConflictException("User " + userId + " are not initiator of event");
         }
-        List<Request> requests = requestRepo.findAllByRequesterIdAndEventId(eventId, dtoIn.getRequestIds());
+        List<Request> requests = requestRepo.findAllByIdAndEventId(eventId, dtoIn.getRequestIds());
         return requestsFinalUpdate(requests, Status.valueOf(dtoIn.getStatus()), event);
 
     }
@@ -294,7 +292,7 @@ public class EventServiceImpl implements EventService {
             } else {
                 request.setStatus(CONFIRMED);
                 request = requestRepo.save(request);
-                dtoOut.getConfirmedRequests().add(RequestMapper.makerRequestDto(request));
+                dtoOut.getConfirmedRequests().add(RequestMapper.makeRequestDto(request));
             }
         }
         return dtoOut;
@@ -304,9 +302,9 @@ public class EventServiceImpl implements EventService {
         RequestStatusDtoOut dtoOut = new RequestStatusDtoOut(new ArrayList<>(), new ArrayList<>());
         for (Request request : requests) {
             statusPendingOrException(request);
-            request.setStatus(Status.REJECTED);
+            request.setStatus(REJECTED);
             request = requestRepo.save(request);
-            dtoOut.getRejectedRequests().add(RequestMapper.makerRequestDto(request));
+            dtoOut.getRejectedRequests().add(RequestMapper.makeRequestDto(request));
         }
         return dtoOut;
     }

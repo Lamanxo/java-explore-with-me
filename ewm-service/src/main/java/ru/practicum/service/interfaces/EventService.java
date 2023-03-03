@@ -30,7 +30,7 @@ public interface EventService {
                                  LocalDateTime rangeStart, LocalDateTime rangeEnd,
                                  Pageable pageable);
 
-    Collection<PartyRequestDto> getRequestsOfEvent(Long userId, Long eventId);
+    Collection<PartyRequestDto> getUserOwnRequests(Long userId, Long eventId);
 
     RequestStatusDtoOut updateRequest(Long userId, Long eventId, RequestStatusDtoIn dtoIn);
 

@@ -6,11 +6,11 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.*;
 import ru.practicum.service.interfaces.EventService;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Collection;
@@ -47,20 +47,21 @@ public class PrivateEventsController {
 
     @PatchMapping("{eventId}")
     public EventDto updateEventByUser(@PathVariable Long userId, @PathVariable Long eventId,
-                                      @RequestBody @Validated EventDtoUserUpdated eventDtoUserUpdated) {
+                                      @RequestBody @Valid EventDtoUserUpdated eventDtoUserUpdated) {
         return service.updateEventByUser(userId, eventId, eventDtoUserUpdated);
     }
 
     @GetMapping("{eventId}/requests")
     public Collection<PartyRequestDto> getRequestsOfEvent(@PathVariable Long userId,
                                                           @PathVariable Long eventId) {
-        return service.getRequestsOfEvent(userId, eventId);
+        return service.getUserOwnRequests(userId, eventId);
     }
 
     @PatchMapping("{eventId}/requests")
     public RequestStatusDtoOut updateRequest(@PathVariable() Long userId,
-                                                                  @PathVariable() Long eventId,
-                                                                  @RequestBody() RequestStatusDtoIn dtoIn) {
+                                             @PathVariable() Long eventId,
+                                             @RequestBody() RequestStatusDtoIn dtoIn) {
+        log.warn("user with id: {} update requests to event with id: {} to {}", userId, eventId, dtoIn);
         return service.updateRequest(userId, eventId, dtoIn);
     }
 

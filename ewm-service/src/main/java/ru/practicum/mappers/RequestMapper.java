@@ -5,7 +5,7 @@ import ru.practicum.model.Request;
 
 public class RequestMapper {
 
-    public static PartyRequestDto makerRequestDto(Request request) {
+    public static PartyRequestDto makeRequestDto(Request request) {
         PartyRequestDto dto = new PartyRequestDto();
         dto.setId(request.getId());
         dto.setCreated(request.getCreated());

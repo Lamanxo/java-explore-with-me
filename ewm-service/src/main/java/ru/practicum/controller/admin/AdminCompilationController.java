@@ -4,11 +4,12 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.CompilationDto;
 import ru.practicum.dto.CompilationDtoIn;
 import ru.practicum.service.interfaces.CompilationService;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/admin/compilations")
@@ -19,7 +20,7 @@ public class AdminCompilationController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CompilationDto addCompilation(@RequestBody @Validated CompilationDtoIn dtoIn) {
+    public CompilationDto addCompilation(@RequestBody @Valid CompilationDtoIn dtoIn) {
         return service.addCompilation(dtoIn);
     }
 

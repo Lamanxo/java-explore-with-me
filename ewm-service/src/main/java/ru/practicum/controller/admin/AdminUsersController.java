@@ -5,11 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.UserDto;
 import ru.practicum.service.interfaces.UserService;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Collection;
@@ -25,7 +25,7 @@ public class AdminUsersController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto addUser(@RequestBody @Validated UserDto dto) {
+    public UserDto addUser(@RequestBody @Valid UserDto dto) {
         log.warn("Add user {}", dto.getName());
         return userService.addUser(dto);
     }

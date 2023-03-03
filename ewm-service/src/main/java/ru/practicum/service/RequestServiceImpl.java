@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.PartyRequestDto;
 import static ru.practicum.mappers.RequestMapper.*;
 
@@ -19,7 +20,6 @@ import ru.practicum.repo.RequestRepository;
 import ru.practicum.repo.UserRepository;
 import ru.practicum.service.interfaces.RequestService;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,7 +53,7 @@ public class RequestServiceImpl implements RequestService {
             throw new ConflictException("Event already full");
         }
         Request request = makeFullRequest(event, requester);
-        return makerRequestDto(requestRepo.save(request));
+        return makeRequestDto(requestRepo.save(request));
     }
 
     @Override
@@ -65,17 +65,16 @@ public class RequestServiceImpl implements RequestService {
             throw new ConflictException("Requester cant cancel others request");
         }
         request.setStatus(Status.CANCELED);
-        return makerRequestDto(requestRepo.save(request));
+        return makeRequestDto(requestRepo.save(request));
     }
 
     @Override
     public Collection<PartyRequestDto> getAllUserRequests(Long userId) {
         userOrException(userId);
         List<PartyRequestDto> dtoList = new ArrayList<>();
-        for (Request request : requestRepo.findAllByRequester(userId)) {
-            dtoList.add(makerRequestDto(request));
+        for (Request request : requestRepo.findAllByRequesterId(userId)) {
+            dtoList.add(makeRequestDto(request));
         }
-
         return dtoList;
     }
 
