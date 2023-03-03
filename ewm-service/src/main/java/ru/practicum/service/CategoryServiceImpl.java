@@ -16,7 +16,6 @@ import ru.practicum.model.Category;
 import ru.practicum.repo.CategoryRepository;
 import ru.practicum.service.interfaces.CategoryService;
 
-import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
