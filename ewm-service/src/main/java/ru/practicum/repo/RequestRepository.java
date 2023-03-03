@@ -30,5 +30,4 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     @Query("select r from Request r where r.id = ?2 and r.event.id = ?1")
     List<Request> findAllByIdAndEventId(Long eventId, List<Long> ids);
-
 }
