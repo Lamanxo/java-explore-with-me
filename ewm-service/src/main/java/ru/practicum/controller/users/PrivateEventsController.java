@@ -28,13 +28,14 @@ public class PrivateEventsController {
     @ResponseStatus(HttpStatus.CREATED)
     public EventDto addByUser(@PathVariable Long userId,
                               @RequestBody EventDtoIn eventDtoIn) {
-        log.warn("user with id: {} create event: {}", userId, eventDtoIn);
+        log.info("User with id: {} created event: {}", userId, eventDtoIn);
         return service.addByUser(userId, eventDtoIn);
     }
 
     @GetMapping("{eventId}")
     public EventDto getByUser(@PathVariable Long userId,
                               @PathVariable Long eventId) {
+        log.info("Get event {} by user {} endpoint", eventId, userId);
         return service.getByUser(userId, eventId);
     }
 
@@ -42,18 +43,21 @@ public class PrivateEventsController {
     public Collection<EventDtoOut> getAllByUser(@PathVariable Long userId,
                                                   @PositiveOrZero @RequestParam(defaultValue = "0") int from,
                                                   @Positive @RequestParam(defaultValue = "10") int size) {
+        log.info("Get all events of user {}", userId);
         return service.getAllByUser(userId, PageRequest.of(from, size));
     }
 
     @PatchMapping("{eventId}")
     public EventDto updateEventByUser(@PathVariable Long userId, @PathVariable Long eventId,
                                       @RequestBody @Valid EventDtoUserUpdated eventDtoUserUpdated) {
+        log.info("Update event {} by user {}", eventId, userId);
         return service.updateEventByUser(userId, eventId, eventDtoUserUpdated);
     }
 
     @GetMapping("{eventId}/requests")
     public Collection<PartyRequestDto> getRequestsOfEvent(@PathVariable Long userId,
                                                           @PathVariable Long eventId) {
+        log.info("Getting requests of event {} by user {}", eventId, userId);
         return service.getUserOwnRequests(userId, eventId);
     }
 
@@ -61,7 +65,7 @@ public class PrivateEventsController {
     public RequestStatusDtoOut updateRequest(@PathVariable() Long userId,
                                              @PathVariable() Long eventId,
                                              @RequestBody() RequestStatusDtoIn dtoIn) {
-        log.warn("user with id: {} update requests to event with id: {} to {}", userId, eventId, dtoIn);
+        log.info("User with id: {} update requests to event with id: {} to {}", userId, eventId, dtoIn);
         return service.updateRequest(userId, eventId, dtoIn);
     }
 

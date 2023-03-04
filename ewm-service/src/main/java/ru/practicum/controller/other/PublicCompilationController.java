@@ -3,6 +3,7 @@ package ru.practicum.controller.other;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.CompilationDto;
@@ -16,6 +17,7 @@ import java.util.Collection;
 @RequestMapping("/compilations")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Slf4j
 public class PublicCompilationController {
     final CompilationService service;
 
@@ -23,11 +25,13 @@ public class PublicCompilationController {
     public Collection<CompilationDto> getCompilations(@RequestParam(required = false) Boolean pinned,
                                                       @PositiveOrZero @RequestParam(defaultValue = "0") int from,
                                                       @Positive @RequestParam(defaultValue = "10") int size) {
+        log.info("Get compilations buy public endpoint. Pinned {}, from {}, size {}", pinned, from, size);
         return service.getCompilations(PageRequest.of(from, size), pinned);
     }
 
     @GetMapping("/{id}")
     public CompilationDto getCompilationById(@PathVariable Long id) {
+        log.info("Get compilation by public ID {}", id);
         return service.getCompilationById(id);
     }
 }

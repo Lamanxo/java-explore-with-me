@@ -24,7 +24,7 @@ public class EventDtoIn {
     String annotation;
     @NotNull
     Long category;
-    @Length(min = 20, max = 7000)
+    @Length(min = 20, max = 4096)
     String description;
     @NotBlank
     @JsonFormat(pattern = DEFAULT_TIME_FORMAT)

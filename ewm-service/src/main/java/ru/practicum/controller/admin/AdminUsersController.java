@@ -26,13 +26,14 @@ public class AdminUsersController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto addUser(@RequestBody @Valid UserDto dto) {
-        log.warn("Add user {}", dto.getName());
+        log.info("Add user {}", dto.getName());
         return userService.addUser(dto);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable Long id) {
+        log.info("Deleting user with ID: {}", id);
         userService.deleteUser(id);
     }
 
@@ -40,6 +41,7 @@ public class AdminUsersController {
     public Collection<UserDto> getUsersPageable(@RequestParam(required = false) List<Long> ids,
                                                 @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") Integer from,
                                                 @Positive @RequestParam(name = "size", defaultValue = "20") Integer size) {
+        log.info("Get users endpoint by admin. List size: {}", ids.size());
         Pageable pageable = PageRequest.of(from,size);
         return userService.getUsersPageable(ids,pageable);
     }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Data
@@ -15,6 +16,7 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CompilationDtoIn {
     Boolean pinned;
+    @Size(min = 10, max = 256)
     @NotBlank
     String title;
     Set<Long> events;

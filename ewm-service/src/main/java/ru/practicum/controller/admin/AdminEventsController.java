@@ -3,6 +3,7 @@ package ru.practicum.controller.admin;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import static ru.practicum.dto.DateTimePattern.DEFAULT_TIME_FORMAT;
 @RestController
 @RequestMapping("/admin/events")
 @RequiredArgsConstructor
+@Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AdminEventsController {
 
@@ -32,6 +34,7 @@ public class AdminEventsController {
     @PatchMapping("/{eventId}")
     public EventDto updateEventByAdmin(@PathVariable Long eventId,
                                        @RequestBody EventDtoAdminUpdated eventDtoAdminUpdated) {
+        log.info("Update event {} by admin endpoint", eventId);
         return service.updateEventByAdmin(eventId, eventDtoAdminUpdated);
     }
 
@@ -43,6 +46,7 @@ public class AdminEventsController {
                                               @RequestParam(defaultValue = "") @DateTimeFormat(pattern = DEFAULT_TIME_FORMAT) LocalDateTime rangeEnd,
                                               @PositiveOrZero @RequestParam(defaultValue = "0") int from,
                                               @Positive @RequestParam(defaultValue = "10") int size) {
+        log.info("Get all events by admin dates from {} to {}", rangeStart, rangeEnd);
         return service.getAllByAdmin(new ArrayList<>(users), states.stream().map(State::valueOf).collect(Collectors.toList()),
                 new ArrayList<>(categories), rangeStart, rangeEnd, PageRequest.of(from, size));
     }

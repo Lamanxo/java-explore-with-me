@@ -258,6 +258,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public RequestStatusDtoOut updateRequest(Long userId, Long eventId, RequestStatusDtoIn dtoIn) {
         userOrException(userId);
         Event event = eventOrException(eventId);
@@ -272,7 +273,7 @@ public class EventServiceImpl implements EventService {
         if (status.equals(CONFIRMED)) {
             return confirmedStatus(requests, event);
         } else if (status.equals(REJECTED)) {
-            return rejectStatus(requests, event);
+            return rejectStatus(requests);
         } else {
             return new RequestStatusDtoOut();
         }
@@ -297,7 +298,7 @@ public class EventServiceImpl implements EventService {
         return dtoOut;
     }
 
-    private RequestStatusDtoOut rejectStatus(List<Request> requests, Event event) {
+    private RequestStatusDtoOut rejectStatus(List<Request> requests) {
         RequestStatusDtoOut dtoOut = new RequestStatusDtoOut(new ArrayList<>(), new ArrayList<>());
         for (Request request : requests) {
             statusPendingOrException(request);

@@ -1,5 +1,6 @@
 package ru.practicum.mappers;
 
+import lombok.experimental.UtilityClass;
 import ru.practicum.dto.CompilationDto;
 import ru.practicum.dto.CompilationDtoIn;
 import ru.practicum.dto.EventDtoOut;
@@ -9,6 +10,7 @@ import ru.practicum.model.Event;
 import java.util.ArrayList;
 import java.util.List;
 
+@UtilityClass
 public class CompilationMapper {
 
     public static CompilationDto makeCompilationDto(Compilation compilation) {

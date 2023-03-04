@@ -23,7 +23,7 @@ public class EventDtoUserUpdated {
     @Size(max = 2048, min = 20)
     String annotation;
     Long category;
-    @Size(max = 7000, min = 20)
+    @Size(max = 4096, min = 20)
     String description;
     @JsonFormat(pattern = DEFAULT_TIME_FORMAT)
     LocalDateTime eventDate;

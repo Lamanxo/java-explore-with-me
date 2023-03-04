@@ -3,6 +3,7 @@ package ru.practicum.controller.other;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -26,6 +27,7 @@ import static ru.practicum.dto.DateTimePattern.DEFAULT_TIME_FORMAT;
 @RestController
 @RequestMapping("/events")
 @RequiredArgsConstructor
+@Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PublicEventsController {
 
@@ -35,6 +37,7 @@ public class PublicEventsController {
     @GetMapping("/{id}")
     public EventDto getByIdPublic(@PathVariable Long id, HttpServletRequest request) {
         statService.hitEndpoint(request.getRequestURI(), request.getRemoteAddr());
+        log.info("Get event by public ID: {}", id);
         return service.getByIdPublic(id);
     }
 
@@ -66,6 +69,7 @@ public class PublicEventsController {
             pageable = PageRequest.of(from, size, sorting);
 
         }
+        log.info("Get all events by public endpoint. Text {}", text);
         return service.getAllByPublic(text, categories, paid, rangeStart,
                 rangeEnd, onlyAvailable, pageable);
     }

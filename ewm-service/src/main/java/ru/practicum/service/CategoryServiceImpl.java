@@ -43,6 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public void deleteCategory(Long id) {
         getCategoryById(id);
         try {
@@ -53,6 +54,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public CategoryDto updateCategory(Long id, CategoryDto categoryDto) {
         if (categoryDto.getName() == null) {
             throw new BadRequestException("Category Name is Null");

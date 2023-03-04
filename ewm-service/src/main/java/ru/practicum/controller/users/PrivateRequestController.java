@@ -21,6 +21,7 @@ public class PrivateRequestController {
 
     @GetMapping
     public Collection<PartyRequestDto> getAllUserRequests(@PathVariable Long userId) {
+        log.info("Getting all user {} requests", userId);
         return service.getAllUserRequests(userId);
     }
 
@@ -28,13 +29,14 @@ public class PrivateRequestController {
     @ResponseStatus(HttpStatus.CREATED)
     public PartyRequestDto addRequest(@PathVariable Long userId,
                                       @RequestParam Long eventId) {
-        log.warn("Added request endpoint from user {}, and event {}", userId, eventId);
+        log.info("Added request endpoint from user {}, and event {}", userId, eventId);
         return service.addRequest(userId, eventId);
     }
 
     @PatchMapping("/{reqId}/cancel")
     public PartyRequestDto cancelRequest(@PathVariable Long userId,
                                          @PathVariable Long reqId) {
+        log.info("User {} and request {} cancellation", userId, reqId);
         return service.cancelRequest(userId, reqId);
     }
 }
