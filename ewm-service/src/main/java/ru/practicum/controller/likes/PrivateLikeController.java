@@ -21,40 +21,40 @@ public class PrivateLikeController {
     @PatchMapping("/like/{eventId}")
     public EventDtoOut addLike(@PathVariable Long userId,
                                @PathVariable Long eventId) {
-        log.info("user with id {} to like event {}", userId, eventId);
+        log.info("User {} liked event {}", userId, eventId);
         return service.addLike(userId, eventId);
     }
 
     @DeleteMapping("/like/{eventId}")
     public void deleteLike(@PathVariable Long userId,
                            @PathVariable Long eventId) {
-        log.info("user {} delete like event {}", userId, eventId);
+        log.info("User {} deleted like to event {}", userId, eventId);
         service.deleteLike(userId, eventId);
     }
 
     @GetMapping("/like")
     public Collection<EventDtoOut> getUserLikes(@PathVariable Long userId) {
-        log.info("user with id {} get liked events", userId);
+        log.info("User's {} liked events", userId);
         return service.getUserLikes(userId);
     }
 
     @GetMapping("/dislike")
     public Collection<EventDtoOut> getUserDislikes(@PathVariable Long userId) {
-        log.info("user with id {} get disliked event", userId);
+        log.info("User's {} disliked events", userId);
         return service.getUserDislikes(userId);
     }
 
     @PatchMapping("/dislike/{eventId}")
     public EventDtoOut addDislike(@PathVariable Long userId,
                                     @PathVariable Long eventId) {
-        log.info("user {} dislike event {}", userId, eventId);
+        log.info("User {} disliked event {}", userId, eventId);
         return service.addDislike(userId, eventId);
     }
 
     @DeleteMapping("/dislike/{eventId}")
     public void deleteDisLike(@PathVariable Long userId,
                               @PathVariable Long eventId) {
-        log.info("user {} delete dislike event {}", userId, eventId);
+        log.info("User {} deleted dislike to event {}", userId, eventId);
         service.deleteDislike(userId, eventId);
     }
 }

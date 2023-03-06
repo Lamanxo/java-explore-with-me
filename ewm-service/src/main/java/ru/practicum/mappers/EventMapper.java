@@ -65,6 +65,7 @@ public class EventMapper {
         dtoOut.setEventDate(event.getEventDate());
         dtoOut.setInitiator(makeUserShortDto(event.getInitiator()));
         dtoOut.setPaid(event.getPaid());
+        dtoOut.setCategory(CategoryMapper.makeCategoryDto(event.getCategory()));
         dtoOut.setTitle(event.getTitle());
         dtoOut.setConfirmedRequests(event.getConfirmedRequests());
         dtoOut.setViews(event.getViews());

@@ -27,7 +27,7 @@ public class UserMapper {
     public static UserShortDto makeUserShortDto(User user) {
         UserShortDto dto = new UserShortDto();
         dto.setId(user.getId());
-        dto.setName(dto.getName());
+        dto.setName(user.getName());
         dto.setRating(user.getRating());
         return dto;
     }

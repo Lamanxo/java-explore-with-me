@@ -29,14 +29,14 @@ public class PublicLikeController {
     public Collection<UserShortDto> getPopularUsers(
             @PositiveOrZero @RequestParam(defaultValue = "0") int from,
             @Positive @RequestParam(defaultValue = "20") int size) {
-        log.info("public get popular users, param: from: {}, size: {}", from, size);
+        log.info("Public getting popular users. from: {}, size: {}", from, size);
         return service.getPopularUsers(PageRequest.of(from, size));
     }
 
     @GetMapping("/events")
     public Collection<EventDtoOut> getPopularEvents(@PositiveOrZero @RequestParam(defaultValue = "0") int from,
                                                     @Positive @RequestParam(defaultValue = "20") int size) {
-        log.info("public get popular events, param: from: {}, size: {}", from, size);
+        log.info("Public getting popular events. from: {}, size: {}", from, size);
         return service.getPopularEvents(PageRequest.of(from, size));
     }
 }

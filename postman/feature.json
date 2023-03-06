@@ -1,0 +1,944 @@
+{
+  "info": {
+    "_postman_id": "1d272950-bdac-4acd-8f7b-28bcdff21848",
+    "name": "feature_rating_events",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "22614690"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Add user1",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"First User\",\r\n    \"email\": \"firstuser@yahoo.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add user2",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Second User\",\r\n    \"email\": \"seconduser@yahoo.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Category",
+      "item": [
+        {
+          "name": "Add category",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Racist meetings \"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Add event1",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"annotation\": \"KKK meeting\",\r\n    \"category\": 1,\r\n    \"eventDate\": \"2023-03-07 00:27:43\",\r\n    \"location\": {\r\n        \"lat\": -3.0108,\r\n        \"lon\": -124.8687\r\n    },\r\n    \"paid\": true,\r\n    \"title\": \"Only for whites\",\r\n    \"description\": \"Only for whites\",\r\n    \"requestModeration\": false,\r\n    \"participantLimit\": 666\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/:userId/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                ":userId",
+                "events"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add event2",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"annotation\": \"Black Panter party\",\r\n    \"category\": 1,\r\n    \"eventDate\": \"2023-03-08 00:27:43\",\r\n    \"location\": {\r\n        \"lat\": -3.0108,\r\n        \"lon\": -124.8687\r\n    },\r\n    \"paid\": true,\r\n    \"title\": \"Except whites\",\r\n    \"description\": \"Except whites\",\r\n    \"requestModeration\": false,\r\n    \"participantLimit\": 777\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/:userId/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                ":userId",
+                "events"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add event3",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"annotation\": \"Chess club party\",\r\n    \"category\": 1,\r\n    \"eventDate\": \"2023-03-10 00:27:43\",\r\n    \"location\": {\r\n        \"lat\": -3.0108,\r\n        \"lon\": -124.8687\r\n    },\r\n    \"paid\": true,\r\n    \"title\": \"Black and whites\",\r\n    \"description\": \"Black and whites\",\r\n    \"requestModeration\": false,\r\n    \"participantLimit\": 777\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/:userId/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                ":userId",
+                "events"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add event_noPOsted",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"annotation\": \"IAW\",\r\n    \"category\": 1,\r\n    \"eventDate\": \"2023-03-10 00:27:43\",\r\n    \"location\": {\r\n        \"lat\": -3.0108,\r\n        \"lon\": -124.8687\r\n    },\r\n    \"paid\": true,\r\n    \"title\": \"Alliance Internationale des Femmes\",\r\n    \"description\": \"Alliance Internationale des Femmes\",\r\n    \"requestModeration\": false,\r\n    \"participantLimit\": 777\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/:userId/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                ":userId",
+                "events"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Change status to posted",
+      "item": [
+        {
+          "name": "Event1_pub",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"annotation\": \"KKK meeting\",\r\n  \"category\": 1,\r\n  \"description\": \"Only for whites\",\r\n  \"eventDate\": \"2023-03-07 00:27:43\",\r\n  \"location\": {\r\n    \"lat\": -3.0108,\r\n    \"lon\": -124.8687\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 666,\r\n  \"requestModeration\": false,\r\n  \"stateAction\": \"PUBLISH_EVENT\",\r\n  \"title\": \"Only for whites\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/events/:eventId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "events",
+                ":eventId"
+              ],
+              "variable": [
+                {
+                  "key": "eventId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Event2_pub",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"annotation\": \"Black Panter party\",\r\n  \"category\": 1,\r\n  \"description\": \"Except whites\",\r\n  \"eventDate\": \"2023-03-08 00:27:43\",\r\n  \"location\": {\r\n    \"lat\": -3.0108,\r\n    \"lon\": -124.8687\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 777,\r\n  \"requestModeration\": false,\r\n  \"stateAction\": \"PUBLISH_EVENT\",\r\n  \"title\": \"Except whites\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/events/:eventId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "events",
+                ":eventId"
+              ],
+              "variable": [
+                {
+                  "key": "eventId",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Event3_pub",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"annotation\": \"Chess club party\",\r\n  \"category\": 1,\r\n  \"description\": \"Black and whites\",\r\n  \"eventDate\": \"2023-03-10 00:27:43\",\r\n  \"location\": {\r\n    \"lat\": -3.0108,\r\n    \"lon\": -124.8687\r\n  },\r\n  \"paid\": true,\r\n  \"participantLimit\": 777,\r\n  \"requestModeration\": false,\r\n  \"stateAction\": \"PUBLISH_EVENT\",\r\n  \"title\": \"Black and whites\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/events/:eventId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "events",
+                ":eventId"
+              ],
+              "variable": [
+                {
+                  "key": "eventId",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Rating_events",
+      "item": [
+        {
+          "name": "exceptions",
+          "item": [
+            {
+              "name": "Like when event not exist",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/users/:userId/like/:eventId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userId",
+                    "like",
+                    ":eventId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "eventId",
+                      "value": "6666"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Dislike when event not exist",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/users/:userId/dislike/:eventId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userId",
+                    "dislike",
+                    ":eventId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "value": "2"
+                    },
+                    {
+                      "key": "eventId",
+                      "value": "7777"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Like when event not posted yet",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status is Conflict\",()=>{\r",
+                      "  pm.response.to.have.status(409);\r",
+                      "    pm.response.to.be.withBody;\r",
+                      "    pm.response.to.be.json;\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/users/:userId/like/:eventId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userId",
+                    "like",
+                    ":eventId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "eventId",
+                      "value": "4"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "actual_logic",
+          "item": [
+            {
+              "name": "User 1 added like to event 3",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is ok\",()=>{\r",
+                      "pm.response.to.be.ok;\r",
+                      "});\r",
+                      "pm.test(\"Expected event with rating 1\",()=>{\r",
+                      "var jsonData = pm.response.json();\r",
+                      "pm.expect(jsonData.rating, '\"rating\" field').to.eql(1);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/users/:userId/like/:eventId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userId",
+                    "like",
+                    ":eventId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "eventId",
+                      "value": "3"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "User 2 added dislike to event 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is ok\",()=>{\r",
+                      "pm.response.to.be.ok;\r",
+                      "});\r",
+                      "pm.test(\"Expected event with rating -1\",()=>{\r",
+                      "var jsonData = pm.response.json();\r",
+                      "pm.expect(jsonData.rating, '\"rating\" field').to.eql(-1);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/users/:userId/dislike/:eventId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userId",
+                    "dislike",
+                    ":eventId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "value": "2"
+                    },
+                    {
+                      "key": "eventId",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Getting popular events with rating sortDesc",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is ok\",()=>{\r",
+                      "    pm.response.to.be.ok;\r",
+                      "});\r",
+                      "pm.test(\"Expected list with 3 events\",()=>{\r",
+                      " var jsonData = pm.response.json();\r",
+                      " pm.expect(jsonData.length, 'events count in total').to.eql(3);\r",
+                      " pm.expect(jsonData[0].rating, 'result[0]: \"rating\" field').to.eql(1);\r",
+                      "  pm.expect(jsonData[1].rating, 'result[1]: \"rating\" field').to.eql(0);\r",
+                      "   pm.expect(jsonData[2].rating, 'result[2]: \"rating\" field').to.eql(-1);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/raiting/events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "raiting",
+                    "events"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Getting popular users with rating soirtDesc",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status is ok\",()=>{\r",
+                      "pm.response.to.be.ok;\r",
+                      "});\r",
+                      "pm.test(\"Expected list with 2 users\",()=>{\r",
+                      " var jsonData = pm.response.json();\r",
+                      "  pm.expect(jsonData[0].rating, 'result[0]: \"tating\" field').to.eql(1);\r",
+                      "  pm.expect(jsonData[1].rating, 'result[1]: \"tating\" field').to.eql(-1);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/raiting/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "raiting",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Getting user's liked events",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status is ok\",()=>{\r",
+                      "pm.response.to.be.ok;\r",
+                      "});\r",
+                      "pm.test(\"Expected list with 1 event\",()=>{\r",
+                      "var jsonData = pm.response.json();\r",
+                      "     pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(3);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/users/:userId/like",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userId",
+                    "like"
+                  ],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Getting user's disliked events",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status is ok\",()=>{\r",
+                      "pm.response.to.be.ok;\r",
+                      "});\r",
+                      "pm.test(\"Expected list with 1 event\",()=>{\r",
+                      "var jsonData = pm.response.json();\r",
+                      "     pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(1);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/users/:userId/dislike",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userId",
+                    "dislike"
+                  ],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "value": "2"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Deleting like to event 3 by user 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status is ok\",()=>{\r",
+                      "pm.response.to.be.ok;\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/users/:userId/like/:eventId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userId",
+                    "like",
+                    ":eventId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "eventId",
+                      "value": "3"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Getting user's liked events_2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status is ok\",()=>{\r",
+                      "pm.response.to.be.ok;\r",
+                      "});\r",
+                      "pm.test(\"Expected empty list\",()=>{\r",
+                      "var jsonData = pm.response.json();\r",
+                      "    pm.expect(jsonData.length, 'events count in total').to.eql(0);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/users/:userId/like",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userId",
+                    "like"
+                  ],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Deleting dislike to event 1 by user 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status is ok\",()=>{\r",
+                      "pm.response.to.be.ok;\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/users/:userId/dislike/:eventId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userId",
+                    "dislike",
+                    ":eventId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "value": "2"
+                    },
+                    {
+                      "key": "eventId",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Getting user's disliked events_2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status is ok\",()=>{\r",
+                      "pm.response.to.be.ok;\r",
+                      "});\r",
+                      "pm.test(\"Expecting empty list\",()=>{\r",
+                      "var jsonData = pm.response.json();\r",
+                      "    pm.expect(jsonData.length, 'events count in total').to.eql(0);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/users/:userId/dislike",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userId",
+                    "dislike"
+                  ],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "value": "2"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ]
+}
