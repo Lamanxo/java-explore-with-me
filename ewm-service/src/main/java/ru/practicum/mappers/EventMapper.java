@@ -8,13 +8,14 @@ import ru.practicum.enums.State;
 import ru.practicum.model.Event;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 import static ru.practicum.mappers.CategoryMapper.makeCategoryDto;
 import static ru.practicum.mappers.UserMapper.makeUserShortDto;
 
 @UtilityClass
 public class EventMapper {
-
 
     public static EventDto makeEventDto(Event event) {
         EventDto eventDto = new EventDto();
@@ -52,6 +53,8 @@ public class EventMapper {
         event.setRequestModeration(dtoIn.getRequestModeration());
         event.setState(State.PENDING);
         event.setViews(0L);
+        event.setLikes(new HashSet<>());
+        event.setDislikes(new HashSet<>());
         return event;
     }
 
@@ -65,6 +68,9 @@ public class EventMapper {
         dtoOut.setTitle(event.getTitle());
         dtoOut.setConfirmedRequests(event.getConfirmedRequests());
         dtoOut.setViews(event.getViews());
+        dtoOut.setDislikes(event.getLikes().stream().map(UserMapper::makeUserShortDto).collect(Collectors.toSet()));
+        dtoOut.setLikes(event.getLikes().stream().map(UserMapper::makeUserShortDto).collect(Collectors.toSet()));
+        dtoOut.setRating((long) event.getLikes().size() - (long) event.getDislikes().size());
         return dtoOut;
     }
 }

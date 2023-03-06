@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import static ru.practicum.dto.DateTimePattern.DEFAULT_TIME_FORMAT;
 
@@ -26,5 +27,8 @@ public class EventDtoOut {
     String title;
     Long confirmedRequests;
     Long views;
+    Set<UserShortDto> likes;
+    Set<UserShortDto> dislikes;
+    Long rating;
 
 }

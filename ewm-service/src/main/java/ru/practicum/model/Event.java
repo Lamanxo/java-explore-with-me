@@ -6,6 +6,7 @@ import ru.practicum.enums.State;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "events")
@@ -56,4 +57,8 @@ public class Event {
     State state;
     @Column(name = "views")
     Long views;
+    @ManyToMany(mappedBy = "likedEvents")
+    Set<User> likes;
+    @ManyToMany(mappedBy = "dislikedEvents")
+    Set<User> dislikes;
 }
