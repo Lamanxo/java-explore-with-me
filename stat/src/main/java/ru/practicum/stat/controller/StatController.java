@@ -3,6 +3,7 @@ package ru.practicum.stat.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.stat.dto.HitDtoIn;
 import ru.practicum.stat.dto.StatDtoOut;
@@ -21,6 +22,7 @@ public class StatController {
     private final StatService statService;
 
     @PostMapping("/hit")
+    @ResponseStatus(HttpStatus.CREATED)
     public void addHit(@RequestBody HitDtoIn hitDtoIn) {
         log.info("Added Hit: {}", hitDtoIn.getUri());
         statService.addHit(hitDtoIn);
