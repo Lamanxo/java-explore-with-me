@@ -1,0 +1,579 @@
+{
+  "info": {
+    "_postman_id": "d3c14c91-90c9-4b69-98e9-bfb372a43f2b",
+    "name": "feature_rating_events",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "22614690"
+  },
+  "item": [
+    {
+      "name": "exceptions",
+      "item": [
+        {
+          "name": "Like when event not exist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/:userId/like/:eventId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                ":userId",
+                "like",
+                ":eventId"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "1"
+                },
+                {
+                  "key": "eventId",
+                  "value": "6666"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Dislike when event not exist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([404]);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/:userId/dislike/:eventId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                ":userId",
+                "dislike",
+                ":eventId"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "2"
+                },
+                {
+                  "key": "eventId",
+                  "value": "7777"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Like when event not posted yet",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is Conflict\",()=>{\r",
+                  "  pm.response.to.have.status(409);\r",
+                  "    pm.response.to.be.withBody;\r",
+                  "    pm.response.to.be.json;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/:userId/like/:eventId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                ":userId",
+                "like",
+                ":eventId"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "1"
+                },
+                {
+                  "key": "eventId",
+                  "value": "4"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "actual_logic",
+      "item": [
+        {
+          "name": "User 1 added like to event 3",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is ok\",()=>{\r",
+                  "pm.response.to.be.ok;\r",
+                  "});\r",
+                  "pm.test(\"Expected event with rating 1\",()=>{\r",
+                  "var jsonData = pm.response.json();\r",
+                  "pm.expect(jsonData.rating, '\"rating\" field').to.eql(1);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/:userId/like/:eventId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                ":userId",
+                "like",
+                ":eventId"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "1"
+                },
+                {
+                  "key": "eventId",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User 2 added dislike to event 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is ok\",()=>{\r",
+                  "pm.response.to.be.ok;\r",
+                  "});\r",
+                  "pm.test(\"Expected event with rating -1\",()=>{\r",
+                  "var jsonData = pm.response.json();\r",
+                  "pm.expect(jsonData.rating, '\"rating\" field').to.eql(-1);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/:userId/dislike/:eventId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                ":userId",
+                "dislike",
+                ":eventId"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "2"
+                },
+                {
+                  "key": "eventId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Getting popular events with rating sortDesc",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is ok\",()=>{\r",
+                  "    pm.response.to.be.ok;\r",
+                  "});\r",
+                  "pm.test(\"Expected list with 20 events\",()=>{\r",
+                  " var jsonData = pm.response.json();\r",
+                  " pm.expect(jsonData.length, 'events count in total').to.eql(20);\r",
+                  " pm.expect(jsonData[0].rating, 'result[0]: \"rating\" field').to.eql(1);\r",
+                  "  pm.expect(jsonData[1].rating, 'result[1]: \"rating\" field').to.eql(0);\r",
+                  "   pm.expect(jsonData[19].rating, 'result[19]: \"rating\" field').to.eql(-1);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/raiting/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "raiting",
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Getting popular users with rating sortDesc",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is ok\",()=>{\r",
+                  "pm.response.to.be.ok;\r",
+                  "});\r",
+                  "pm.test(\"Expected list with 20 users\",()=>{\r",
+                  " var jsonData = pm.response.json();\r",
+                  "  pm.expect(jsonData[0].rating, 'result[0]: \"rating\" field').to.eql(1);\r",
+                  "  pm.expect(jsonData[1].rating, 'result[1]: \"rating\" field').to.eql(0);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/raiting/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "raiting",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Getting user's liked events",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is ok\",()=>{\r",
+                  "pm.response.to.be.ok;\r",
+                  "});\r",
+                  "pm.test(\"Expected list with 1 event\",()=>{\r",
+                  "var jsonData = pm.response.json();\r",
+                  "     pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(3);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/:userId/like",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                ":userId",
+                "like"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Getting user's disliked events",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is ok\",()=>{\r",
+                  "pm.response.to.be.ok;\r",
+                  "});\r",
+                  "pm.test(\"Expected list with 1 event\",()=>{\r",
+                  "var jsonData = pm.response.json();\r",
+                  "     pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(1);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/:userId/dislike",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                ":userId",
+                "dislike"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deleting like to event 3 by user 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is ok\",()=>{\r",
+                  "pm.response.to.be.ok;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/:userId/like/:eventId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                ":userId",
+                "like",
+                ":eventId"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "1"
+                },
+                {
+                  "key": "eventId",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Getting user's liked events_2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is ok\",()=>{\r",
+                  "pm.response.to.be.ok;\r",
+                  "});\r",
+                  "pm.test(\"Expected empty list\",()=>{\r",
+                  "var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.length, 'events count in total').to.eql(0);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/:userId/like",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                ":userId",
+                "like"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deleting dislike to event 1 by user 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is ok\",()=>{\r",
+                  "pm.response.to.be.ok;\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/:userId/dislike/:eventId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                ":userId",
+                "dislike",
+                ":eventId"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "2"
+                },
+                {
+                  "key": "eventId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Getting user's disliked events_2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is ok\",()=>{\r",
+                  "pm.response.to.be.ok;\r",
+                  "});\r",
+                  "pm.test(\"Expecting empty list\",()=>{\r",
+                  "var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.length, 'events count in total').to.eql(0);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/:userId/dislike",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                ":userId",
+                "dislike"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ]
+}
