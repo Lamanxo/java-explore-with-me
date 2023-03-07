@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.EventDtoOut;
 import ru.practicum.dto.UserShortDto;
 import ru.practicum.enums.State;
@@ -33,6 +34,7 @@ public class LikesServiceImpl implements LikesService {
 
     final EventRepository eventRepo;
 
+    @Transactional
     @Override
     public EventDtoOut addLike(Long userId, Long eventId) {
         User user = userOrException(userId);
@@ -59,6 +61,7 @@ public class LikesServiceImpl implements LikesService {
         return user.getLikedEvents().stream().map(EventMapper::makeEventDtoOut).collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public void deleteLike(Long userId, Long eventId) {
         User user = userOrException(userId);
@@ -68,6 +71,7 @@ public class LikesServiceImpl implements LikesService {
         userRepo.save(user);
     }
 
+    @Transactional
     @Override
     public EventDtoOut addDislike(Long userId, Long eventId) {
         User user = userOrException(userId);
@@ -88,6 +92,7 @@ public class LikesServiceImpl implements LikesService {
         }
     }
 
+    @Transactional
     @Override
     public void deleteDislike(Long userId, Long eventId) {
         User user = userOrException(userId);
